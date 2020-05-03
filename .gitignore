@@ -1,0 +1,13 @@
+/Debug/
+*.ipch
+*.db
+.vs/ProjectSettings.json
+.vs/VSWorkspaceState.json
+.vs/slnx.sqlite
+.vs/lab2-pascal--/v16/.suo
+*.json
+*.obj
+*.exe
+*.log
+*.ninja
+*.cmake

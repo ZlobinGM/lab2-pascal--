@@ -1,0 +1,14 @@
+language: cpp
+sudo: false
+compiler:
+  - gcc
+before_script:
+  - mkdir ../build
+  - cd ../build
+script:
+  - cmake ../lab2-pascal--/Злобин
+  - make -j
+  - cd ./base_test/
+  - ls -la
+notifications:
+  email: false
