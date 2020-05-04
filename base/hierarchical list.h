@@ -28,12 +28,13 @@ public:
 
 	HierList<T>& operator=(HierList<T>&& _list);
 	
-	void InsertNext(const T& _data);
-	void InsertDown(const T& _data);
+	void InsertNext(const T& _data); //if HierList is empty, insert first value
+	void InsertDown(const T& _data); //only if current not nullptr
+	void GoFirst();
 	bool GoNext();
 	bool GoDown();
 	bool GoUp();
-	T& ReadCurrent();
+	T& ReadCurrent(); //only if current not nullptr
 };
 
 #endif
