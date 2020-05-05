@@ -4,8 +4,10 @@
 #include <string>
 #include <vector>
 #include <sstream>
+#include <fstream>
 #include <cmath>
 #include <iostream>
+#include <algorithm>
 #include "hierarchical list.h"
 
 using namespace std;
