@@ -9,14 +9,17 @@ using namespace std;
 
 class CondPostfix
 {
-	string infix;
 	vector<string> postfix;
 	ArithmPostfix arithm;
+
+	int Priority(const string& str);
 public:
-	bool IsCorrect();
-	void CalculateArithmExpressions();
-	void ToPostfix(string _infix);
-	double Calculate();
+	bool IsDigit(const string& str);
+	bool IsOperation(const string& str);
+
+	double CalculateArithmExpressions(vector<string> _arithm);
+	void ToPostfix(vector<string> _infix);
+	bool Calculate();
 };
 
 #endif
