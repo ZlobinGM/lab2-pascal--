@@ -6,24 +6,24 @@
 using namespace std;
 
 template <class T>
-class Node
+class NodeTree
 {
 private:
 	string name;
 	T data;
-	Node<T>* parent;
-	Node<T>* leftChild;
-	Node<T>* rightChild;
+	NodeTree<T>* parent;
+	NodeTree<T>* leftChild;
+	NodeTree<T>* rightChild;
 public:
 	int heightDiff;		//left heght-right height
 	bool isLeftChild;
 
-	Node();
-	Node(string _name, T _data);
-
-	void SetChild(Node<T>* child, bool left);
-	Node<T>* GetChild(bool left);
-	Node<T>* GetParent();
+	NodeTree();
+	NodeTree(string _name, T _data);
+	
+	void SetChild(NodeTree<T>* child, bool left);
+	NodeTree<T>* GetChild(bool left);
+	NodeTree<T>* GetParent();
 	void Rotate(bool leftChild);
 };
 
@@ -31,20 +31,22 @@ template <class T>
 class SearchTree
 {
 protected:
-	Node<T>* head;
+	NodeTree<T>* head;
 	int height;
-	int DataCount;//количетсво записей
+	int DataCount;
 
-	Node<T>* FindRecord(string name);
-	bool Balance(Node<T>* record);
+	bool Balance(NodeTree<T>* _node);
+	void Clear(NodeTree<T>* start);
+	NodeTree<T>* FindNode(string name);
 
-	Node<T>* minRecord;
+	NodeTree<T>* minRecord;
 private:
 	const bool firstRecordLeft = true;
 public:
 	SearchTree();
 	~SearchTree();
 
+	T* Find(string name);
 	void Insert(string _name, T& _data);
 
 	int GetHeight();
