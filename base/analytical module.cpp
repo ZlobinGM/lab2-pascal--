@@ -109,6 +109,24 @@ void AnalyticalMod::SyntaxConntrol()
 		if (find(str.begin(), str.end(), "if") != str.end()) flag_if_then++;
 		if (find(str.begin(), str.end(), "then") != str.end()) flag_if_then--;
 
+		// init var by read function
+		if (find(str.begin(), str.end(), "Read") != str.end())
+		{
+			string initvar;
+			for each (string var in uninitialized_var)
+			{
+				if (find(str.begin(), str.end(), var) != str.end())
+					initvar = var;
+			}
+			for (auto i = uninitialized_var.begin(); i != uninitialized_var.end(); i++)
+			{
+				if (*i == initvar) {
+					uninitialized_var.erase(i);
+					break;
+				}
+			}
+		}
+
 		// uninitialized var don't use
 		auto assignment_pos = find(str.begin(), str.end(), ":=");
 		if (assignment_pos != str.end())
@@ -216,6 +234,14 @@ HierList<string> AnalyticalMod::CreateHierList()
 			{
 				str.replace(insert, insert + 1, " ,");
 				insert = find(insert, str.end(), ',');
+				iter = insert + 1;
+			}
+
+			// separating "." from the previos word
+			while ((insert = find(iter, str.end(), '.')) != str.end())
+			{
+				str.replace(insert, insert + 1, " .");
+				insert = find(insert, str.end(), '.');
 				iter = insert + 1;
 			}
 

@@ -28,7 +28,7 @@ bool ArithmPostfix::IsOperation(const string& str)
 	return true;
 }
 
-void ArithmPostfix::ToPostfix(vector<string> _infix)
+void ArithmPostfix::ToPostfix(vector<string>& _infix)
 {
 	stack<string> st;
 

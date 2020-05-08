@@ -17,7 +17,7 @@ public:
 	bool IsDigit(const string& str);
 	bool IsOperation(const string& str);
 
-	void ToPostfix(vector<string> _infix);
+	void ToPostfix(vector<string>& _infix);
 	double Calculate();
 };
 
