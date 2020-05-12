@@ -31,12 +31,12 @@ void AnalyticalMod::SyntaxConntrol()
 	{
 		str = *it;
 		// const section
-		if (find(str.begin(), str.end(), "const") != str.end()) {
+		if (str.find("const") != string::npos) {
 			it++;
 			str = *it;
-			while ((find(str.begin(), str.end(), "const") == str.end())
-				&& (find(str.begin(), str.end(), "var") == str.end())
-				&& (find(str.begin(), str.end(), "begin") == str.end())) 
+			while ((str.find("const") == string::npos)
+				&& (str.find("var") == string::npos)
+				&& (str.find("begin") == string::npos))
 			{
 				for (auto i = str.begin(); i != str.end(); i++)
 					if (*i == ':' || *i == '=' || *i == ';') *i = ' ';
@@ -62,15 +62,15 @@ void AnalyticalMod::SyntaxConntrol()
 		}
 
 		//var section
-		if (find(str.begin(), str.end(), "var") != str.end()) {
+		if (str.find("var") != string::npos) {
 			it++;
 			str = *it;
-			while ((find(str.begin(), str.end(), "const") == str.end())
-				&& (find(str.begin(), str.end(), "var") == str.end())
-				&& (find(str.begin(), str.end(), "begin") == str.end()))
+			while ((str.find("const") == string::npos)
+				&& (str.find("var") == string::npos)
+				&& (str.find("begin") == string::npos))
 			{
 				for (auto i = str.begin(); i != str.end(); i++)
-					if (*i == ':' || *i == ';') *i = ' ';
+					if (*i == ':' || *i == ';' || *i == ',') *i = ' ';
 
 				stringstream ss(str);
 				string tmp;
@@ -96,26 +96,27 @@ void AnalyticalMod::SyntaxConntrol()
 		}
 
 		// begin end flag
-		if (find(str.begin(), str.end(), "begin") != str.end()) {
+		if (str.find("begin") != string::npos) {
 			flag_begin_end++;
 			continue;
 		}
-		if (find(str.begin(), str.end(), "end") != str.end()) {
+		if (str.find("end") != string::npos) {
 			flag_begin_end--;
 			continue;
 		}
 
 		// if then flag
-		if (find(str.begin(), str.end(), "if") != str.end()) flag_if_then++;
-		if (find(str.begin(), str.end(), "then") != str.end()) flag_if_then--;
+		if (str.find("if") != string::npos) flag_if_then++;
+		if (str.find("then") != string::npos) flag_if_then--;
 
 		// init var by read function
-		if (find(str.begin(), str.end(), "Read") != str.end())
+		if (str.find("Read") != string::npos)
 		{
 			string initvar;
+			size_t var_pos = str.find('(') + 1;
 			for each (string var in uninitialized_var)
 			{
-				if (find(str.begin(), str.end(), var) != str.end())
+				if (str.find(var, var_pos) != string::npos)
 					initvar = var;
 			}
 			for (auto i = uninitialized_var.begin(); i != uninitialized_var.end(); i++)
@@ -128,17 +129,16 @@ void AnalyticalMod::SyntaxConntrol()
 		}
 
 		// uninitialized var don't use
-		auto assignment_pos = find(str.begin(), str.end(), ":=");
-		if (assignment_pos != str.end())
+		size_t assignment_pos = str.find(":=");
+		if (assignment_pos != string::npos)
 		{
-			short pos = distance(str.begin(), assignment_pos);
 			string initvar;
 			for each (string var in uninitialized_var)
 			{
-				auto var_pos = find(str.begin(), str.end(), var);
-				if (var_pos != str.end() && distance(str.begin(), var_pos) > pos) 
+				size_t var_pos = str.find(var);
+				if (var_pos != string::npos) 
 				{
-					if (distance(str.begin(), var_pos) > pos)
+					if (var_pos > assignment_pos)
 						throw "using uninitialized var";
 					else
 						initvar = var;
@@ -180,104 +180,103 @@ void AnalyticalMod::SyntaxConntrol()
 	if (flag_begin_end != 0)throw "begin end error";
 }
 
-HierList<string> AnalyticalMod::CreateHierList()
+HierList<string>* AnalyticalMod::CreateHierList()
 {
-	HierList<string> hierlist;
+	HierList<string>* hierlist = new HierList<string>;
 	string str;
 
 	for (auto it = text.begin(); it != text.end(); it++)
 	{
-		hierlist.InsertNext(*it);
-		hierlist.GoNext();
+		hierlist->InsertNext(*it);
+		hierlist->GoNext();
 
 		str = *it;
 
 		string substring;
 
 		// if str contains substring
-		if (find(str.begin(), str.end(), "Write") != str.end()) 
+		if (str.find("Write") != string::npos) 
 		{
 			// separating first "(" from the previos and next word
-			auto insert = find(str.begin(), str.end(), '(');
-			str.replace(insert, insert + 1, " ( ");
+			size_t insert = str.find('(');
+			str.replace(insert, 1, " ( ");
 
-			string tmp;
 			// separating last ")" from the previos and next word
-			tmp = ')';
-			insert = find_end(str.begin(), str.end(), tmp.begin(), tmp.end());
-			str.replace(insert, insert + 1, " ) ");
+			insert = str.rfind(')');
+			str.replace(insert, 1, " ) ");
 
 			// separating "," after substring from the previos word
-			tmp = '"';
-			auto endOfStr = find_end(str.begin(), str.end(), tmp.begin(), tmp.end());
-			auto iter = endOfStr;
-			while ((insert = find(iter, str.end(), ',')) != str.end())
+			size_t endOfStr = str.rfind('"');
+			size_t iter = endOfStr;
+			while ((insert = str.find(',', iter)) != string::npos)
 			{
-				str.replace(insert, insert + 1, " ,");
-				insert = find(insert, str.end(), ',');
+				str.replace(insert, 1, " ,");
+				insert = str.find(',', insert);
 				iter = insert + 1;
 			}
 
 			// save substring
-			auto beginOfStr = find(str.begin(), str.end(), '"');
-			substring = str.substr(str.find('"'), distance(beginOfStr, endOfStr) + 1);
-			str.replace(beginOfStr, endOfStr + 1, "//ThereWasASubstringHere");
+			size_t beginOfStr = str.find('"');
+			substring = str.substr(beginOfStr, endOfStr - beginOfStr);
+			str.replace(beginOfStr, endOfStr - beginOfStr, "//ThereWasASubstringHere");
 		}
 		// str without substring
 		else 
 		{
-			auto iter = str.begin();
-			auto insert = iter;
+			size_t iter = 0;
+			size_t insert = iter;
 
 			// separating "," from the previos word
-			while ((insert = find(iter, str.end(), ',')) != str.end())
+			while ((insert = str.find(',', iter)) != string::npos)
 			{
-				str.replace(insert, insert + 1, " ,");
-				insert = find(insert, str.end(), ',');
+				str.replace(insert, 1, " ,");
+				insert = str.find(',', insert);
 				iter = insert + 1;
 			}
 
-			// separating "." from the previos word
-			while ((insert = find(iter, str.end(), '.')) != str.end())
+			// replace . for , in numbers
+			if (str.find("double") != string::npos)
+				while ((insert = str.find('.', iter)) != string::npos &&
+					str.at(insert - 1) <= '9' && str.at(insert - 1) >= '0')
 			{
-				str.replace(insert, insert + 1, " .");
-				insert = find(insert, str.end(), '.');
+				str.replace(insert, 1, ",");
 				iter = insert + 1;
 			}
+
+			// separating "." from the end
+			if ((insert = str.find('.')) != string::npos
+				&& str.find("end") != string::npos)
+				str.replace(insert, 1, " .");
 
 			// separating ";" from the previos word
-			iter = str.begin();
-			while ((insert = find(iter, str.end(), ';')) != str.end())
-			{
-				str.replace(insert, insert + 1, " ;");
-				insert = find(insert, str.end(), ';');
-				iter = insert + 1;
-			}
+			if ((insert = str.rfind(';')) != string::npos
+				&& insert == str.size() - 1)
+				str.replace(insert, 1, " ;");
 
 			// separating ":" from the previos word
-			iter = str.begin();
-			while ((insert = find(iter, str.end(), ':')) != str.end())
+			iter = 0;
+			while ((insert = str.find(':', iter)) != string::npos)
 			{
-				str.replace(insert, insert + 1, " :");
-				insert = find(insert, str.end(), ':');
+				str.replace(insert, 1, " :");
+				insert = str.find(':', insert);
 				iter = insert + 1;
 			}
 
 			// separating "(" from the previos and next word
-			iter = str.begin();
-			while ((insert = find(iter, str.end(), '(')) != str.end())
+			iter = 0;
+			while ((insert = str.find('(', iter)) != string::npos)
 			{
-				str.replace(insert, insert + 1, " ( ");
-				insert = find(insert, str.end(), '(');
+				str.replace(insert, 1, " ( ");
+				insert = str.find('(', insert);
 				iter = insert + 1;
 			}
 
 			// separating ")" from the previos and next word
-			iter = str.begin();
-			while ((insert = find(iter, str.end(), ')')) != str.end())
+			iter = 0;
+			while ((insert = str.find(')', iter)) != string::npos)
 			{
-				str.replace(insert, insert + 1, " ) ");
-				insert = find(insert, str.end(), ')');
+				str.replace(insert, 1, " ) ");
+				insert = str.find(')', insert);
 				iter = insert + 1;
 			}
 		}
@@ -298,7 +297,7 @@ HierList<string> AnalyticalMod::CreateHierList()
 				}
 		
 		for (auto iter = v.begin(); iter != v.end(); iter++) 
-			hierlist.InsertDown(*iter);
+			hierlist->InsertDown(*iter);
 	}
 
 	return hierlist;

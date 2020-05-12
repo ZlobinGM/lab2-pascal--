@@ -83,7 +83,9 @@
   <ItemGroup>
     <ClInclude Include="arithmetic postfix.h" />
     <ClInclude Include="conditional postfix.h" />
-    <ClInclude Include="hierarchical list.h" />
+    <ClInclude Include="hierarchical list.h">
+      <DeploymentContent>false</DeploymentContent>
+    </ClInclude>
     <ClInclude Include="analytical module.h" />
     <ClInclude Include="compiler.h" />
     <ClInclude Include="search tree.h" />
@@ -96,6 +98,9 @@
     <ClCompile Include="compiler.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="search tree.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\code.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

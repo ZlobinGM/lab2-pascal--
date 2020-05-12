@@ -8,13 +8,13 @@ using namespace std;
 template <class T>
 class NodeTree
 {
-private:
-	string name;
-	T data;
 	NodeTree<T>* parent;
 	NodeTree<T>* leftChild;
 	NodeTree<T>* rightChild;
 public:
+	string name;
+	T data;
+
 	int heightDiff;		//left heght-right height
 	bool isLeftChild;
 
@@ -38,8 +38,6 @@ protected:
 	bool Balance(NodeTree<T>* _node);
 	void Clear(NodeTree<T>* start);
 	NodeTree<T>* FindNode(string name);
-
-	NodeTree<T>* minRecord;
 private:
 	const bool firstRecordLeft = true;
 public:

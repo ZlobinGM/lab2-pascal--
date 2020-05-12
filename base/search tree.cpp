@@ -4,7 +4,7 @@ template<class T>
 NodeTree<T>* SearchTree<T>::FindNode(string name)
 {
 	bool nextLeft = firstRecordLeft;
-	NodeTree<T>* curRecord = head.GetChild(nextLeft);
+	NodeTree<T>* curRecord = head->GetChild(nextLeft);
 
 	//go down, looking for parent for newRecord
 	while (curRecord != nullptr)
@@ -75,6 +75,7 @@ void SearchTree<T>::Clear(NodeTree<T>* start)
 template<class T>
 SearchTree<T>::SearchTree()
 {
+	head = new NodeTree<T>;
 	height = 0;
 	DataCount = 0;
 }
@@ -82,8 +83,8 @@ SearchTree<T>::SearchTree()
 template<class T>
 SearchTree<T>::~SearchTree()
 {
-	Clear(head.GetChild(firstRecordLeft));
-	head.SetChild(nullptr, firstRecordLeft);
+	Clear(head->GetChild(firstRecordLeft));
+	head->SetChild(nullptr, firstRecordLeft);
 	DataCount = 0;
 }
 
@@ -97,8 +98,8 @@ T* SearchTree<T>::Find(string name)
 template<class T>
 void SearchTree<T>::Insert(string _name, T& _data)
 {
-	NodeTree<T>* curRecord = head.GetChild(firstRecordLeft);
-	NodeTree<T>* parentRecord = &head;
+	NodeTree<T>* curRecord = head->GetChild(firstRecordLeft);
+	NodeTree<T>* parentRecord = head;
 	bool nextLeft = firstRecordLeft;
 
 	//go down, looking for parent for newRecord
@@ -121,7 +122,7 @@ void SearchTree<T>::Insert(string _name, T& _data)
 	curRecord = parentRecord;
 	bool prevRecordLeft = newRecord->isLeftChild;
 	bool afterBalance = false;
-	while (curRecord != &head)
+	while (curRecord != head)
 	{
 		if (!afterBalance)
 		{
@@ -133,7 +134,7 @@ void SearchTree<T>::Insert(string _name, T& _data)
 		{
 			break;
 		}
-		else if (curRecord == head.GetChild(firstRecordLeft))
+		else if (curRecord == head->GetChild(firstRecordLeft))
 		{
 			height++;
 		}
@@ -143,12 +144,7 @@ void SearchTree<T>::Insert(string _name, T& _data)
 	}
 	if (DataCount == 0)
 	{
-		minRecord = newRecord;
 		height++;
-	}
-	else if (newRecord->isLeftChild && newRecord->GetParent() == minRecord)
-	{
-		minRecord = newRecord;
 	}
 	DataCount++;
 }

@@ -3,6 +3,7 @@
 
 #include "hierarchical list.h"
 #include "search tree.h"
+#include "search tree.cpp"
 #include "arithmetic postfix.h"
 #include "conditional postfix.h"
 #include <iostream>
@@ -13,12 +14,11 @@ using namespace std;
 class Compiler
 {
 	SearchTree<int> int_var;
-	SearchTree<const int> int_const;
+	SearchTree<int> int_const;
 	SearchTree<double> double_var;
-	SearchTree<const double> double_const;
+	SearchTree<double> double_const;
 	HierList<string> code;
-public:
-	void ProcessProgram(HierList<string>& code);
+
 	void DoBeginEndBlock();
 	void DoIfBlock();
 	void AssigningValue();
@@ -29,5 +29,7 @@ public:
 	void ExecuteWrite();
 	double CalculateArithm(vector<string>& expression);
 	bool CalculateCond(vector<string>& expression);
+public:
+	void ProcessProgram(HierList<string>& code);
 };
 #endif

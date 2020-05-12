@@ -9,6 +9,7 @@
 #include <iostream>
 #include <algorithm>
 #include "hierarchical list.h"
+#include "hierarchical list.cpp"
 
 using namespace std;
 
@@ -21,7 +22,7 @@ public:
 
 	void Read(ifstream& input);
 	void SyntaxConntrol();
-	HierList<string> CreateHierList();
+	HierList<string>* CreateHierList();
 };
 
 #endif

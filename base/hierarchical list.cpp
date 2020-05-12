@@ -1,7 +1,7 @@
 #include "hierarchical list.h"
 
 template<class T>
-inline HierList<T>::HierList(const HierList<T>& _list)
+HierList<T>::HierList(HierList<T>& _list)
 {
 	pFirst = new Node<T>;
 	pFirst->data = _list.pFirst->data;
@@ -96,6 +96,7 @@ HierList<T>& HierList<T>::operator=(HierList<T>&& _list)
 		pre_levels.push(tmp.top());
 		tmp.pop();
 	}
+	return *this;
 }
 
 template<class T>
@@ -143,7 +144,7 @@ void HierList<T>::GoFirst()
 template<class T>
 bool HierList<T>::GoNext()
 {
-	if(pCurrent->pNext == nullptr || pCurrent == nullptr) return false;
+	if(pCurrent == nullptr || pCurrent->pNext == nullptr) return false;
 	pCurrent = pCurrent->pNext;
 	return true;
 }
@@ -151,7 +152,7 @@ bool HierList<T>::GoNext()
 template<class T>
 bool HierList<T>::GoDown()
 {
-	if (pCurrent->pDown == nullptr || pCurrent == nullptr) return false;
+	if (pCurrent == nullptr || pCurrent->pDown == nullptr) return false;
 	pre_levels.push(pCurrent);
 	pCurrent = pCurrent->pDown;
 	return true;

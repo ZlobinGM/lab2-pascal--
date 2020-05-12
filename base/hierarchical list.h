@@ -22,8 +22,8 @@ protected:
 	Node<T>* pCurrent;
 	stack<Node<T>*> pre_levels;
 public:
-	HierList() : pFirst(nullptr), pCurrent(nullptr), length(0) {}
-	HierList(const HierList<T>& _list);
+	HierList() : pFirst(nullptr), pCurrent(nullptr) {}
+	HierList(HierList<T>& _list);
 	~HierList();
 
 	HierList<T>& operator=(HierList<T>&& _list);

@@ -1,9 +1,10 @@
 ﻿#include "compiler.h"
+#include "hierarchical list.cpp"
 
 void Compiler::ProcessProgram(HierList<string>& _code)
 {
 	code = move(_code);
-
+	code.GoFirst();
 	// skip program name
 	code.GoNext();
 	code.GoDown();
@@ -59,7 +60,7 @@ void Compiler::DoBeginEndBlock()
 
 		str = code.ReadCurrent();
 
-		if (find(str.begin(), str.end(), "Write") != str.end())
+		if (str.find("Write") != string::npos)
 		{
 			code.GoDown();
 			ExecuteWrite();
@@ -68,7 +69,7 @@ void Compiler::DoBeginEndBlock()
 			code.GoDown();
 			continue;
 		}
-		else if (find(str.begin(), str.end(), "Read") != str.end())
+		else if (str.find("Read") != string::npos)
 		{
 			code.GoDown();
 			ExecuteRead();
@@ -77,7 +78,7 @@ void Compiler::DoBeginEndBlock()
 			code.GoDown();
 			continue;
 		}
-		else if (find(str.begin(), str.end(), ":=") != str.end())
+		else if (str.find(":=") != string::npos)
 		{
 			code.GoDown();
 			AssigningValue();
@@ -86,7 +87,7 @@ void Compiler::DoBeginEndBlock()
 			code.GoDown();
 			continue;
 		}
-		else if (find(str.begin(), str.end(), "if") != str.end())
+		else if (str.find("if") != string::npos)
 		{
 			code.GoDown();
 			DoIfBlock();
@@ -141,7 +142,7 @@ void Compiler::DoIfBlock()
 
 			str = code.ReadCurrent();
 
-			if (find(str.begin(), str.end(), "Write") != str.end())
+			if (str.find("Write") != string::npos)
 			{
 				code.GoDown();
 				ExecuteWrite();
@@ -149,7 +150,7 @@ void Compiler::DoIfBlock()
 				code.GoNext();
 				code.GoDown();
 			}
-			else if (find(str.begin(), str.end(), "Read") != str.end())
+			else if (str.find("Read") != string::npos)
 			{
 				code.GoDown();
 				ExecuteRead();
@@ -157,7 +158,7 @@ void Compiler::DoIfBlock()
 				code.GoNext();
 				code.GoDown();
 			}
-			else if (find(str.begin(), str.end(), ":=") != str.end())
+			else if (str.find(":=") != string::npos)
 			{
 				code.GoDown();
 				AssigningValue();
@@ -165,7 +166,7 @@ void Compiler::DoIfBlock()
 				code.GoNext();
 				code.GoDown();
 			}
-			else if (find(str.begin(), str.end(), "if") != str.end())
+			else if (str.find("if") != string::npos)
 			{
 				code.GoDown();
 				DoIfBlock();
@@ -250,7 +251,7 @@ void Compiler::DoIfBlock()
 
 				str = code.ReadCurrent();
 
-				if (find(str.begin(), str.end(), "Write") != str.end())
+				if (str.find("Write") != string::npos)
 				{
 					code.GoDown();
 					ExecuteWrite();
@@ -258,7 +259,7 @@ void Compiler::DoIfBlock()
 					code.GoNext();
 					code.GoDown();
 				}
-				else if (find(str.begin(), str.end(), "Read") != str.end())
+				else if (str.find("Read") != string::npos)
 				{
 					code.GoDown();
 					ExecuteRead();
@@ -266,7 +267,7 @@ void Compiler::DoIfBlock()
 					code.GoNext();
 					code.GoDown();
 				}
-				else if (find(str.begin(), str.end(), ":=") != str.end())
+				else if (str.find(":=") != string::npos)
 				{
 					code.GoDown();
 					AssigningValue();
@@ -274,7 +275,7 @@ void Compiler::DoIfBlock()
 					code.GoNext();
 					code.GoDown();
 				}
-				else if (find(str.begin(), str.end(), "if") != str.end())
+				else if (str.find("if") != string::npos)
 				{
 					code.GoDown();
 					DoIfBlock();
@@ -332,6 +333,7 @@ void Compiler::CreateVar()
 			continue;
 		}
 		names.push_back(code.ReadCurrent());
+		code.GoNext();
 	}
 
 	code.GoNext();
