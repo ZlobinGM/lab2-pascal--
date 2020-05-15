@@ -35,13 +35,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="hierarchical list.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="analytical module.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="search tree.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">

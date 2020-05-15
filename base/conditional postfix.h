@@ -1,11 +1,8 @@
-#ifndef __CONDITIONAL_POSTFIX_H__
-#define __CONDITIONAL_POSTFIX_H__
+#pragma once
 
 #include <string>
 #include <vector>
 #include "arithmetic postfix.h"
-
-using namespace std;
 
 class CondPostfix
 {
@@ -21,5 +18,3 @@ public:
 	void ToPostfix(vector<string> _infix);
 	bool Calculate();
 };
-
-#endif

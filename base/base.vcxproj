@@ -85,6 +85,7 @@
     <ClInclude Include="conditional postfix.h" />
     <ClInclude Include="hierarchical list.h">
       <DeploymentContent>false</DeploymentContent>
+      <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </ClInclude>
     <ClInclude Include="analytical module.h" />
     <ClInclude Include="compiler.h" />
@@ -94,10 +95,8 @@
     <ClCompile Include="analytical module.cpp" />
     <ClCompile Include="arithmetic postfix.cpp" />
     <ClCompile Include="conditional postfix.cpp" />
-    <ClCompile Include="hierarchical list.cpp" />
     <ClCompile Include="compiler.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="search tree.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\code.txt" />

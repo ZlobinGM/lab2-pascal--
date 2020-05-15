@@ -1,5 +1,4 @@
-#ifndef __ANALYTICAL_MODULE_H__
-#define __ANALYTICAL_MODULE_H__
+#pragma once
 
 #include <string>
 #include <vector>
@@ -8,8 +7,8 @@
 #include <cmath>
 #include <iostream>
 #include <algorithm>
+#include <Windows.h>
 #include "hierarchical list.h"
-#include "hierarchical list.cpp"
 
 using namespace std;
 
@@ -24,5 +23,3 @@ public:
 	void SyntaxConntrol();
 	HierList<string>* CreateHierList();
 };
-
-#endif

@@ -197,6 +197,7 @@ HierList<string>* AnalyticalMod::CreateHierList()
 		// if str contains substring
 		if (str.find("Write") != string::npos) 
 		{
+
 			// separating first "(" from the previos and next word
 			size_t insert = str.find('(');
 			str.replace(insert, 1, " ( ");
@@ -204,6 +205,10 @@ HierList<string>* AnalyticalMod::CreateHierList()
 			// separating last ")" from the previos and next word
 			insert = str.rfind(')');
 			str.replace(insert, 1, " ) ");
+
+			// separating ";" from the previos word
+			insert = str.rfind(';');
+			str.replace(insert, 1, " ;");
 
 			// separating "," after substring from the previos word
 			size_t endOfStr = str.rfind('"');
@@ -216,9 +221,10 @@ HierList<string>* AnalyticalMod::CreateHierList()
 			}
 
 			// save substring
-			size_t beginOfStr = str.find('"');
+			size_t beginOfStr = str.find('"') + 1;
 			substring = str.substr(beginOfStr, endOfStr - beginOfStr);
-			str.replace(beginOfStr, endOfStr - beginOfStr, "//ThereWasASubstringHere");
+			beginOfStr--;
+			str.replace(beginOfStr, endOfStr - beginOfStr + 1, "ThereWasASubstringHere");
 		}
 		// str without substring
 		else 
@@ -290,7 +296,7 @@ HierList<string>* AnalyticalMod::CreateHierList()
 		// return original substring
 		if (*(v.begin()) == "Write") 
 			for (auto iter = v.begin(); iter != v.end(); iter++)
-				if (*iter == "//ThereWasASubstringHere") 
+				if (*iter == "ThereWasASubstringHere") 
 				{
 					*iter = substring;
 					break;

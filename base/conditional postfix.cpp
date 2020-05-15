@@ -86,6 +86,8 @@ void CondPostfix::ToPostfix(vector<string> _infix)
 			*it_first = to_string(CalculateArithmExpressions(sub_expression));
 			sub_expression.clear();
 
+			it = it_first;
+
 			flag_arithm_expression = false;
 			continue;
 		}

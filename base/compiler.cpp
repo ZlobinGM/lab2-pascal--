@@ -1,5 +1,4 @@
 ﻿#include "compiler.h"
-#include "hierarchical list.cpp"
 
 void Compiler::ProcessProgram(HierList<string>& _code)
 {
@@ -402,10 +401,6 @@ void Compiler::ExecuteWrite()
 	string substring = code.ReadCurrent();
 	string var;
 
-	// erase begin " and end "
-	substring.erase(substring.begin());
-	substring.erase(substring.end() - 1);
-
 	code.GoNext();
 
 	// replace var with its value
@@ -430,6 +425,18 @@ void Compiler::ExecuteWrite()
 
 double Compiler::CalculateArithm(vector<string>& expression)
 {
+	for (auto iter = expression.begin(); iter != expression.end(); iter++)
+	{
+		if (int_var.Find(*iter) != nullptr)
+			*iter = to_string(*int_var.Find(*iter));
+		else if (double_var.Find(*iter) != nullptr)
+			*iter = to_string(*double_var.Find(*iter));
+		else if (int_const.Find(*iter) != nullptr)
+			*iter = to_string(*int_const.Find(*iter));
+		else if (double_const.Find(*iter) != nullptr)
+			*iter = to_string(*double_const.Find(*iter));
+	}
+
 	ArithmPostfix postfix;
 	postfix.ToPostfix(expression);
 	return postfix.Calculate();
@@ -437,6 +444,18 @@ double Compiler::CalculateArithm(vector<string>& expression)
 
 bool Compiler::CalculateCond(vector<string>& expression)
 {
+	for (auto iter = expression.begin(); iter != expression.end(); iter++)
+	{
+		if (int_var.Find(*iter) != nullptr)
+			*iter = to_string(*int_var.Find(*iter));
+		else if (double_var.Find(*iter) != nullptr)
+			*iter = to_string(*double_var.Find(*iter));
+		else if (int_const.Find(*iter) != nullptr)
+			*iter = to_string(*int_const.Find(*iter));
+		else if (double_const.Find(*iter) != nullptr)
+			*iter = to_string(*double_const.Find(*iter));
+	}
+
 	CondPostfix postfix;
 	postfix.ToPostfix(expression);
 	return postfix.Calculate();

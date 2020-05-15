@@ -1,15 +1,10 @@
-#ifndef __COMPILER_H__
-#define __COMPILER_H__
+#pragma once
 
 #include "hierarchical list.h"
 #include "search tree.h"
-#include "search tree.cpp"
-#include "arithmetic postfix.h"
 #include "conditional postfix.h"
 #include <iostream>
 #include <vector>
-
-using namespace std;
 
 class Compiler
 {
@@ -32,4 +27,3 @@ class Compiler
 public:
 	void ProcessProgram(HierList<string>& code);
 };
-#endif
