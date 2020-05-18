@@ -1,0 +1,6 @@
+program Example;
+const
+    Pi: double = 3.1415926;
+begin
+    Write("Ïè = ", Res);
+end.

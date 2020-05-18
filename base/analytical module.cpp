@@ -106,7 +106,67 @@ void AnalyticalMod::SyntaxConntrol()
 		}
 
 		// if then flag
-		if (str.find("if") != string::npos) flag_if_then++;
+		if (str.find("if") != string::npos)
+		{
+			flag_if_then++;
+
+			// find undeclared var
+			string letter_str = str;
+			vector<string> all_operations =
+			{
+				"(", ")", "+", "-", "mod", "div", "*", "/",
+				"or", "xor", "and", "not", "=", "<>", ">", "<", ">=", "<="
+			};
+
+			for (auto i = letter_str.begin(); i != letter_str.end(); i++)
+				if (*i == ')' || *i == ';' || *i == '(') *i = ' ';
+
+			// insert ' ' befor words
+			for (size_t i = 0; i < letter_str.size(); i++)
+			{
+				if ((letter_str[i] >= 'a' && letter_str[i] <= 'z') || (letter_str[i] >= 'A' && letter_str[i] <= 'Z'))
+				{
+					letter_str.insert(i, 1, ' ');
+					do
+					{
+						i++;
+					} while (i < letter_str.size() && letter_str[i] != ' ');
+				}
+			}
+
+			// erase if, then, all vars, all operations
+			size_t pos = letter_str.find("if");
+			if (pos != string::npos) letter_str.erase(pos, 2);
+			pos = letter_str.find("then");
+			if (pos != string::npos) letter_str.erase(pos, 4);
+			for each (string var in all_var_names)
+			{
+				pos = 0;
+				while ((pos = letter_str.find(var, pos)) != string::npos)
+					if ((pos == 0 || letter_str[pos - 1] == ' ') &&
+						(pos == letter_str.size() || letter_str[pos + var.size()] == ' '))
+						letter_str.erase(pos, var.size());
+					else
+						pos++;
+			}
+			for each (string operation in all_operations)
+			{
+				pos = 0;
+				while ((pos = letter_str.find(operation, pos)) != string::npos)
+					if ((pos == 0 || letter_str[pos - 1] == ' ') &&
+						(pos == letter_str.size() || letter_str[pos + operation.size()] == ' '))
+						letter_str.erase(pos, operation.size());
+					else
+						pos++;
+			}
+
+			// find undeclered letter
+			for (auto iter = letter_str.begin(); iter != letter_str.end(); iter++)
+			{
+				if ((*iter >= 'a' && *iter <= 'z') || (*iter >= 'A' && *iter <= 'Z'))
+					throw "undeclared var";
+			}
+		}
 		if (str.find("then") != string::npos) flag_if_then--;
 
 		// init var by read function
@@ -150,6 +210,59 @@ void AnalyticalMod::SyntaxConntrol()
 					uninitialized_var.erase(i);
 					break;
 				}
+			}
+
+			// find undeclared var
+			string letter_str = str;
+			vector<string> all_operations =
+			{
+				"(", ")", "+", "-", "mod", "div", "*", "/",
+			};
+
+			for (auto i = letter_str.begin(); i != letter_str.end(); i++)
+				if (*i == ')' || *i == ';' || *i == '(') *i = ' ';
+
+			// insert ' ' befor words
+			for (size_t i = 0; i < letter_str.size(); i++)
+			{
+				if ((letter_str[i] >= 'a' && letter_str[i] <= 'z') || (letter_str[i] >= 'A' && letter_str[i] <= 'Z'))
+				{
+					letter_str.insert(i, 1, ' ');
+					do
+					{
+						i++;
+					} while (i < letter_str.size() && letter_str[i] != ' ');
+				}
+			}
+
+			// erase all vars, all operations
+			size_t pos;
+			for each (string var in all_var_names)
+			{
+				pos = 0;
+				while ((pos = letter_str.find(var, pos)) != string::npos)
+					if ((pos == 0 || letter_str[pos - 1] == ' ') &&
+						(pos == letter_str.size() || letter_str[pos + var.size()] == ' '))
+						letter_str.erase(pos, var.size());
+					else
+						pos++;
+			}
+			for each (string operation in all_operations)
+			{
+				pos = 0;
+				while ((pos = letter_str.find(operation, pos)) != string::npos)
+					if ((pos == 0 || letter_str[pos - 1] == ' ') &&
+						(pos == letter_str.size() || letter_str[pos + operation.size()] == ' '))
+						letter_str.erase(pos, operation.size());
+					else
+						pos++;
+			}
+
+			// find undeclered letter
+			for (auto iter = letter_str.begin(); iter != letter_str.end(); iter++)
+			{
+				if ((*iter >= 'a' && *iter <= 'z') || (*iter >= 'A' && *iter <= 'Z'))
+					throw "undeclared var";
 			}
 		}
 

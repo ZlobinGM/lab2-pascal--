@@ -16,7 +16,24 @@ int main()
 	SetConsoleOutputCP(1251);
 
 	ifstream ifile;
-	ifile.open("../code.txt");
+
+	string path;
+	cout << "Enter path to Pascal-- code: ";
+	cin >> path;
+	/*
+
+	../code.txt
+	
+	../code1.txt
+
+	../code2.txt
+
+	../code3.txt
+
+	../code4.txt
+
+	*/
+	ifile.open(path);
 
 	try {
 		AnalyticalMod amod;
