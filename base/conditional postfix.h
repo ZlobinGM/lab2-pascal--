@@ -16,5 +16,6 @@ public:
 
 	double CalculateArithmExpressions(vector<string> _arithm);
 	void ToPostfix(vector<string> _infix);
+	vector<string>& GetPostfix() { return postfix; };
 	bool Calculate();
 };

@@ -1,4 +1,4 @@
-#include "compiler.cpp"
+#include "compiler.h"
 #include <gtest.h>
 
 TEST(Compiler, one_plus_one)

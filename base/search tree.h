@@ -29,16 +29,15 @@ public:
 template <class T>
 class SearchTree
 {
-protected:
+private:
 	NodeTree<T>* head;
 	int height;
 	int DataCount;
+	const bool firstRecordLeft = true;
 
 	bool Balance(NodeTree<T>* _node);
 	void Clear(NodeTree<T>* start);
 	NodeTree<T>* FindNode(string name);
-private:
-	const bool firstRecordLeft = true;
 public:
 	SearchTree();
 	~SearchTree();
@@ -47,6 +46,8 @@ public:
 	void Insert(string _name, T& _data);
 
 	int GetHeight();
+	int GetCount();
+	bool IsEmpty();
 };
 
 template<class T>
@@ -156,7 +157,7 @@ void SearchTree<T>::Insert(string _name, T& _data)
 	{
 		if (curRecord->name == _name)
 		{
-			throw "Item with same name already exists";
+			throw "item with same name already exists";
 		}
 		nextLeft = _name.length() < curRecord->name.length() ||
 			(_name.length() == curRecord->name.length() && _name < curRecord->name);
@@ -202,6 +203,18 @@ template<class T>
 int SearchTree<T>::GetHeight()
 {
 	return height;
+}
+
+template<class T>
+inline int SearchTree<T>::GetCount()
+{
+	return DataCount;
+}
+
+template<class T>
+inline bool SearchTree<T>::IsEmpty()
+{
+	return DataCount == 0;
 }
 
 

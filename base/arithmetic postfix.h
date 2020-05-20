@@ -17,5 +17,6 @@ public:
 	bool IsOperation(const string& str);
 
 	void ToPostfix(vector<string>& _infix);
+	vector<string>& GetPostfix() { return postfix; };
 	double Calculate();
 };
