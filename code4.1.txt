@@ -1,0 +1,23 @@
+program Example;
+const
+    Pi: double = 3.1415926;
+    one: integer = 1;
+var
+    num1, num2: integer;
+    Res, d: double;
+begin
+    num1 := one + one + one;
+    Write("Введите вещественное неотрицательное число, не меньше чем 2.5: ");
+    Read(d);
+    Write("Введите целое число: ");
+    Read(num2);
+    if (d + 2.5 >= 5) then
+    begin
+        Res := num1 * d + num2;
+        Write("Результат = ", Res);
+    end
+    else
+    begin
+        Write("Неверный ввод");
+    end
+end.

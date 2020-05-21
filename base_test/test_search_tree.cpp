@@ -1,3 +1,4 @@
+#pragma once
 #include "search tree.h"
 #include <gtest.h>
 

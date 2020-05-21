@@ -100,10 +100,14 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\code.txt" />
+    <Text Include="..\code1.1.txt" />
     <Text Include="..\code1.txt" />
     <Text Include="..\code2.txt" />
+    <Text Include="..\code3.1.txt" />
     <Text Include="..\code3.txt" />
+    <Text Include="..\code4.1.txt" />
     <Text Include="..\code4.txt" />
+    <Text Include="..\code5.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

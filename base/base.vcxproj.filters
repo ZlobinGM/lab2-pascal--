@@ -57,5 +57,9 @@
     <Text Include="..\code2.txt" />
     <Text Include="..\code3.txt" />
     <Text Include="..\code4.txt" />
+    <Text Include="..\code5.txt" />
+    <Text Include="..\code3.1.txt" />
+    <Text Include="..\code4.1.txt" />
+    <Text Include="..\code1.1.txt" />
   </ItemGroup>
 </Project>

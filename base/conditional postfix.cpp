@@ -38,6 +38,8 @@ double CondPostfix::CalculateArithmExpressions(vector<string> _arithm)
 
 void CondPostfix::ToPostfix(vector<string> _infix)
 {
+	_infix.push_back(")");
+	_infix.insert(_infix.begin(), "(");
 	auto it_first = _infix.begin();
 	auto it_last = it_first;
 

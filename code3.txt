@@ -2,5 +2,6 @@ program Example;
 const
     Pi: double = 3.1415926;
 begin
-    Write("Пи = ", Res);
+    Write("Пи = ", Pi);
+    Write(" ожидаемое Пи = ", 3.1415926);
 end.

@@ -1,0 +1,18 @@
+program Example;
+const
+    Pi: double = 3.1415926;
+var
+    num1, num2: integer;
+    Res, d: double;
+begin
+    num1 := 56;
+    num2 := 12;
+    d := 10.33;
+    if (num2 mod 2 = 0) then
+    begin
+        Res := (num1 - num2 * 5 div 2) / ((d + 2) * 2);
+        Write("Результат = ", Res);
+    end
+    else
+        Write("Неверный ввод");
+end.

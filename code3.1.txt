@@ -1,0 +1,7 @@
+program Example;
+const
+    Pi: integer = 3;
+begin
+    Write("Пи = ", Pi);
+    Write(" ожидаемое Пи = ", 3);
+end.

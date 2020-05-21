@@ -1,0 +1,19 @@
+program Example;
+var
+    num1: integer;
+begin
+    Write("Введите целое число: ");
+    Read(num1);
+    Write("Это число - ");
+    if (num1 mod 2 = 0) then
+        Write("Чётное, ");
+    else
+        Write("Нечётное, ");
+    if (num1 = 0) then
+        Write("Равно нулю");
+    else
+        if (num1 < 0) then
+            Write("Отрицательное");
+        else
+            Write("Положительное");
+end.

@@ -1,3 +1,4 @@
+#pragma once
 #include <gtest.h>
 #include "arithmetic postfix.cpp"
 

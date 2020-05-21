@@ -1,3 +1,4 @@
+#pragma once
 #include "conditional postfix.cpp"
 #include <gtest.h>
 

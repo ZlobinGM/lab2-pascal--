@@ -37,4 +37,17 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\error_code1.txt" />
+    <Text Include="..\error_code2.txt" />
+    <Text Include="..\error_code3.txt" />
+    <Text Include="..\error_code4.txt" />
+    <Text Include="..\error_code5.txt" />
+    <Text Include="..\error_code6.txt" />
+    <Text Include="..\error_code2.1.txt" />
+    <Text Include="..\error_code3.1.txt" />
+    <Text Include="..\error_code5.1.txt" />
+    <Text Include="..\error_code7.txt" />
+    <Text Include="..\error_code8.txt" />
+  </ItemGroup>
 </Project>

@@ -371,6 +371,9 @@ void Compiler::CreateConst()
 	}
 	else if (type == "double")
 	{
+		size_t insert;
+		if ((insert = code.ReadCurrent().find(",")) != string::npos)
+			code.ReadCurrent().replace(insert, 1, ".");
 		double value = stod(code.ReadCurrent());
 		double_const.Insert(name, value);
 	}
@@ -416,7 +419,7 @@ void Compiler::ExecuteWrite()
 		else if (double_const.Find(code.ReadCurrent()) != nullptr)
 			var = to_string(*double_const.Find(code.ReadCurrent()));
 		else
-			throw "writing var isn't exist";
+			var = code.ReadCurrent();
 		substring += var;
 	}
 

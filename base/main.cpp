@@ -30,7 +30,13 @@ int main()
 
 	../code3.txt
 
+	../code3.1.txt
+
 	../code4.txt
+
+	../code4.1.txt
+
+	../code5.txt
 
 	*/
 	ifile.open(path);

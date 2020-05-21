@@ -1,3 +1,4 @@
+#pragma once
 #include "hierarchical list.h"
 #include <gtest.h>
 
